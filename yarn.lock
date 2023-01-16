@@ -291,6 +291,19 @@
     "@material/feature-targeting" "^14.0.0"
     "@material/rtl" "^14.0.0"
 
+"@material/form-field@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@material/form-field/-/form-field-14.0.0.tgz#a1d773f0d8d25cc7c59201ff62d2c11e5cfb7122"
+  integrity sha512-k1GNBj6Sp8A7Xsn5lTMp5DkUkg60HX7YkQIRyFz1qCDCKJRWh/ou7Z45GMMgKmG3aF6LfjIavc7SjyCl8e5yVg==
+  dependencies:
+    "@material/base" "^14.0.0"
+    "@material/feature-targeting" "^14.0.0"
+    "@material/ripple" "^14.0.0"
+    "@material/rtl" "^14.0.0"
+    "@material/theme" "^14.0.0"
+    "@material/typography" "^14.0.0"
+    tslib "^2.1.0"
+
 "@material/icon-button@^14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@material/icon-button/-/icon-button-14.0.0.tgz#cdfc7e7b967abe81d537fd7db916c9113c3a09b7"
@@ -459,6 +472,17 @@
     "@material/button" "^14.0.0"
     "@material/dialog" "^14.0.0"
     "@material/dom" "^14.0.0"
+    "@smui/common" "^7.0.0-beta.0"
+    svelte2tsx "^0.5.12"
+
+"@smui/form-field@^7.0.0-beta.0":
+  version "7.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@smui/form-field/-/form-field-7.0.0-beta.0.tgz#dfad79d25d4267eebe5d775024b5864bf49fbc5c"
+  integrity sha512-YWHg8bH1+sc8j5wmdbGdZJNtireCro7fBNp8RZCceChHXQPvaxhUwRU6zV/HepcVLT14SVSO3px5jRNnpCuM8Q==
+  dependencies:
+    "@material/feature-targeting" "^14.0.0"
+    "@material/form-field" "^14.0.0"
+    "@material/rtl" "^14.0.0"
     "@smui/common" "^7.0.0-beta.0"
     svelte2tsx "^0.5.12"
 
