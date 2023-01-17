@@ -111,3 +111,19 @@ export function truncateName(name: string) {
 		return name;
 	}
 }
+
+/**
+ * Converts a GOOD ascension level (0-6) to the corresponding level cap in-game
+ * @param ascension - the GOOD ascension id
+ * @returns - a number indicating the maximum level at the given ascension ID
+ */
+export function getAcensionLevel(ascension: number) {
+	switch (ascension) {
+		case 0:
+			return 20;
+		case 1:
+			return 40;
+		default:
+			return 30+10*(ascension)
+	}
+}
