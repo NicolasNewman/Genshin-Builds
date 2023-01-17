@@ -1,4 +1,6 @@
-<slot></slot>
+<script>
+    import "../app.css"
+</script>
 
 <style>
     :global(body) {
@@ -9,3 +11,5 @@
         background-size: cover;   
     }
 </style>
+
+<slot />
