@@ -113,6 +113,19 @@ export function truncateName(name: string) {
 }
 
 /**
+ * Seperates a camel cased string into seperate words
+ * i.e.:
+ * SangonomiaKokomi -> Sangonomia Kokomi
+ * SacrificialFragments -> Sacrificial Fragments
+ * 
+ * @param name - camel case string
+ * @returns - input string seperated into words
+ */
+export function seperateCamelCase(str: string) {
+	return str.match(/[A-Z][a-z]+/g)?.join(' ');
+}
+
+/**
  * Converts a GOOD ascension level (0-6) to the corresponding level cap in-game
  * @param ascension - the GOOD ascension id
  * @returns - a number indicating the maximum level at the given ascension ID
