@@ -1,6 +1,29 @@
 import type { IBuild } from "src/types/build";
-import type { IGOOD } from "src/types/good";
+import type { IGOOD, StatKey, SubstatKey } from "src/types/good";
 import { roundSubStat } from "./helper";
+
+type JoinedStat = StatKey | SubstatKey
+export const StatToName: {[key in JoinedStat]: string} = {
+	hp: 'HP',
+	hp_: 'HP%',
+	atk: 'ATK',
+	atk_: 'ATK%',
+	def: 'DEF',
+	def_: 'DEF%',
+	critDMG_: 'CD',
+	critRate_: 'CR',
+	eleMas: 'EM',
+	heal_: 'HB',
+	enerRech_: 'ER',
+	physical_dmg_: 'Physical',
+	anemo_dmg_: 'Anemo',
+	cryo_dmg_: 'Cryo',
+	dendro_dmg_: 'Dendro',
+	electro_dmg_: 'Electro',
+	geo_dmg_: 'Geo',
+	hydro_dmg_: 'Hydro',
+	pyro_dmg_: 'Pyro'
+}
 
 export const convertGOODtoBuild = (data: IGOOD): IBuild[] => {
 	const { artifacts, characters, weapons } = data;
