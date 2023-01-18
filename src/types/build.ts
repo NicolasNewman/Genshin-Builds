@@ -29,7 +29,7 @@ type IArtifactBuild = Partial<{
 	[key in SlotKey]: IArtifact<key>;
 }>;
 
-type IArtifact<T extends SlotKey> = T extends 'flower' | 'plume'
+export type IArtifact<T extends SlotKey> = T extends 'flower' | 'plume'
 	? {
 			type: 'flower' | 'plume';
 			set: ArtifactSetKey;
