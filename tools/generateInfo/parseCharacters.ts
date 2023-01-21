@@ -20,12 +20,21 @@ const exportData = (data: { [key: string]: any }) => {
 			weapons[weapon] = 1;
 		}
 	);
+	console.log(buffs);
 
-	const ts = `export type Elements = ${toString(Object.keys(elements)).join(' | ')};
+	const ts = `import { toIdedObj } from './helper';
+export type Elements = ${toString(Object.keys(elements)).join(' | ')};
 export type WeaponTypes = ${toString(Object.keys(weapons)).join(' | ')};
 export type StatBuffs = ${toString(Object.keys(buffs)).join(' | ')};
-export type Characters = ${toString(names).join(' | ')};
-export const CharacterInfo = ${JSON.stringify(data)};`;
+export type CharacterKey = ${toString(names).join(' | ')};
+export const characters: CharacterKey[] = [${toString(names).toString()}];
+export const characterIDs = toIdedObj(characters);
+export const characterWeapons: { [key in CharacterKey]: string[] } = {
+	${Object.entries<{ element: string; weapon: string; statBuff: string }>(data)
+		.map(([character, { weapon }]) => `${character}: ${weapon.toLocaleLowerCase()},`)
+		.join('\n')}
+};
+export const characterInfo = ${JSON.stringify(data)};`;
 	fs.writeFileSync('mytestfile.ts', ts);
 };
 
@@ -132,6 +141,8 @@ export const CharacterInfo = ${JSON.stringify(data)};`;
 					// console.log(stats);
 					const data: any = await Actor.getValue('characters');
 					data[character].stats = stats;
+					data[character].statBuff = stats.statBuff;
+					delete data[character].stats.statBuff;
 					await Actor.setValue('characters', data);
 				}
 			}
@@ -140,7 +151,7 @@ export const CharacterInfo = ${JSON.stringify(data)};`;
 	});
 	await crawler.run(['https://genshin-impact.fandom.com/wiki/Character']);
 	const characters: { [key: string]: any } | null = await Actor.getValue('characters');
-	// console.log(characters);
+	console.log(characters);
 	if (characters) {
 		exportData(characters);
 	}
