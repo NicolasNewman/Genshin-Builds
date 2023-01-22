@@ -5,7 +5,9 @@
     "packages/*"
   ],
   "scripts": {
-    "gen": "npx lerna run gen:create && npx lerna run gen:build && yarn install"
+    "gen": "npx lerna run gen:create && npx lerna run gen:build && yarn install",
+    "dev": "npx lerna run dev",
+    "update": "npx lerna run update"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
