@@ -28,6 +28,20 @@
 		<link rel="modulepreload" href="/Genshin-Builds/_app/immutable/chunks/shared-23917130.js">
 	</head>
 	<body data-sveltekit-preload-data="hover">
+		<script>
+			(function (l) {
+				if (l.search[1] === '/') {
+					var decoded = l.search
+						.slice(1)
+						.split('&')
+						.map(function (s) {
+							return s.replace(/~and~/g, '&');
+						})
+						.join('?');
+					window.history.replaceState(null, '', l.pathname.slice(0, -1) + decoded + l.hash);
+				}
+			})(window.location);
+		</script>
 		<div style="display: contents">
 		<script type="module" data-sveltekit-hydrate="45h">
 			import { start } from "/Genshin-Builds/_app/immutable/start-f3d54112.js";
@@ -36,7 +50,7 @@
 				env: {},
 				paths: {"assets":"/Genshin-Builds","base":"/Genshin-Builds"},
 				target: document.querySelector('[data-sveltekit-hydrate="45h"]').parentNode,
-				version: "1674413570775"
+				version: "1674414128165"
 			});
 		</script></div>
 	</body>
