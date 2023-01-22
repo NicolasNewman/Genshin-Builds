@@ -1,0 +1,7 @@
+{
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"javascript.format.enable": true,
+	"typescript.format.enable": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+}
