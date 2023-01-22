@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { getAcensionLevel } from 'shared';
 	import type { IBuild } from '../../types/build';
 	export let build: IBuild;
@@ -21,7 +22,7 @@
 	</div>
 	<div
 		class="absolute top-0 left-0 -z-10 w-full h-full bg-cover bg-center brightness-75"
-		style="background-image: url(/characters/{character}.png)"
+		style="background-image: url({base}/characters/{character}.png)"
 	/>
 </div>
 
