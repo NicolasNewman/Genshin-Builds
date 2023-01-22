@@ -1,4 +1,4 @@
-# Genshin Builds
+# [Genshin Builds](https://nicolasnewman.github.io/Genshin-Builds)
 
 Serverless website for creating Genshin Impact build cards and sharing them with others.
 
