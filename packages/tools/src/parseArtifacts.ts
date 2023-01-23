@@ -7,6 +7,10 @@ import { Page } from "puppeteer";
 const exportData = (data: ArtifactParseData) => {
   return `
 export type ArtifactKey = ${toString(Object.keys(data)).join(" | ")};
+export const artifacts: ArtifactKey[] = [${toString(
+    Object.keys(data)
+  ).toString()}];
+export const artifactIDs = toIdedObj(artifacts);
 export const ArtifactInfo = ${JSON.stringify(data)}
 `;
 };
