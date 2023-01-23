@@ -4,54 +4,7 @@
  * Contains lists of in-game names and their mapping to IDs
  */
 import { toIdedObj } from 'shared';
-import type { ArtifactSetKey, StatKey, SubstatKey } from '../types/good';
-
-export const artifacts: ArtifactSetKey[] = [
-	// 'InitiateLost',
-	'Adventurer',
-	'LuckyDog',
-	'TravelingDoctor',
-	'ResolutionOfSojourner',
-	'TinyMiracle',
-	'Berserker',
-	'Instructor',
-	'TheExile',
-	'DefendersWill',
-	'BraveHeart',
-	'MartialArtist',
-	'Gambler',
-	'Scholar',
-	'PrayersForWisdom',
-	'PrayersForDestiny',
-	'PrayersForIllumination',
-	'PrayersToSpringtime',
-	'GladiatorsFinale',
-	'WanderersTroupe',
-	'NoblesseOblige',
-	'BloodstainedChivalry',
-	'MaidenBeloved',
-	'ViridescentVenerer',
-	'ArchaicPetra',
-	'RetracingBolide',
-	'Thundersoother',
-	'ThunderingFury',
-	'Lavawalker',
-	'CrimsonWitchOfFlames',
-	'BlizzardStrayer',
-	'HeartOfDepth',
-	'TenacityOfTheMillelith',
-	'PaleFlame',
-	'ShimenawasReminiscence',
-	'EmblemOfSeveredFate',
-	'HuskOfOpulentDreams',
-	'OceanHuedClam',
-	'VermillionHereafter',
-	'EchoesOfAnOffering',
-	'DeepwoodMemories',
-	'GildedDreams',
-	'DesertPavilionChronicle',
-	'FlowerOfParadiseLost'
-];
+import type { StatKey, SubstatKey } from '../types/good';
 
 export const artifactMS: StatKey[] = [
 	'hp', //HP
@@ -89,6 +42,5 @@ export const artifactSS: (SubstatKey | '_')[] = [
 	'critDMG_' //Crit DMG
 ];
 
-export const artifactIDs = toIdedObj(artifacts);
 export const artifactMSIDs = toIdedObj(artifactMS);
 export const artifactSSIDs = toIdedObj(artifactSS);

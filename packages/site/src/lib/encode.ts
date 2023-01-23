@@ -3,12 +3,20 @@
  *
  * Contains encoding/decoding and base 2<->64 conversion functions
  */
-import { binPad, characterIDs, characters, characterWeaponIDs, characterWeapons } from 'shared';
+import {
+	artifactIDs,
+	artifacts,
+	binPad,
+	characterIDs,
+	characters,
+	characterWeaponIDs,
+	characterWeapons
+} from 'shared';
 import type { IBuild } from '../types/build';
 import type { IGOOD } from '../types/good';
 import { subStatValueIDs, subStatValues } from '../types/stats';
 import { convertGOODtoBuild } from './build';
-import { artifactIDs, artifactMS, artifactMSIDs, artifacts, artifactSS, artifactSSIDs } from './db';
+import { artifactMS, artifactMSIDs, artifactSS, artifactSSIDs } from './db';
 
 // charset for base64 encoding (modified to be URL safe)
 const to = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._'.split('');

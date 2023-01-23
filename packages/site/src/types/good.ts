@@ -1,4 +1,4 @@
-import type { CharacterKey, WeaponKey } from 'shared';
+import type { ArtifactKey, CharacterKey, WeaponKey } from 'shared';
 
 export interface IGOOD {
 	format: string;
@@ -67,56 +67,12 @@ export type SubstatKey = Extract<
 	'hp' | 'hp_' | 'atk' | 'atk_' | 'def' | 'def_' | 'eleMas' | 'enerRech_' | 'critRate_' | 'critDMG_'
 >;
 
-export type ArtifactSetKey =
-	| 'Adventurer' //Adventurer
-	| 'ArchaicPetra' //Archaic Petra
-	| 'Berserker' //Berserker
-	| 'BlizzardStrayer' //Blizzard Strayer
-	| 'BloodstainedChivalry' //Bloodstained Chivalry
-	| 'BraveHeart' //Brave Heart
-	| 'CrimsonWitchOfFlames' //Crimson Witch of Flames
-	| 'DeepwoodMemories' //Deepwood Memories
-	| 'DefendersWill' //Defender's Will
-	| 'DesertPavilionChronicle' //Desert Pavilion Chronicle?
-	| 'EchoesOfAnOffering' //Echoes of an Offering
-	| 'EmblemOfSeveredFate' //Emblem of Severed Fate
-	| 'FlowerOfParadiseLost' //Flower of Paradise Lost
-	| 'Gambler' //Gambler
-	| 'GildedDreams' //Gilded Dreams
-	| 'GladiatorsFinale' //Gladiator's Finale
-	| 'HeartOfDepth' //Heart of Depth
-	| 'HuskOfOpulentDreams' //Husk of Opulent Dreams
-	| 'Instructor' //Instructor
-	| 'Lavawalker' //Lavawalker
-	| 'LuckyDog' //Lucky Dog
-	| 'MaidenBeloved' //Maiden Beloved
-	| 'MartialArtist' //Martial Artist
-	| 'NoblesseOblige' //Noblesse Oblige
-	| 'OceanHuedClam' //Ocean-Hued Clam
-	| 'PaleFlame' //Pale Flame
-	| 'PrayersForDestiny' //Prayers for Destiny
-	| 'PrayersForIllumination' //Prayers for Illumination
-	| 'PrayersForWisdom' //Prayers for Wisdom
-	| 'PrayersToSpringtime' //Prayers to Springtime
-	| 'ResolutionOfSojourner' //Resolution of Sojourner
-	| 'RetracingBolide' //Retracing Bolide
-	| 'Scholar' //Scholar
-	| 'ShimenawasReminiscence' //Shimenawa's Reminiscence
-	| 'TenacityOfTheMillelith' //Tenacity of the Millelith
-	| 'TheExile' //The Exile
-	| 'ThunderingFury' //Thundering Fury
-	| 'Thundersoother' //Thundersoother
-	| 'TinyMiracle' //Tiny Miracle
-	| 'TravelingDoctor' //Traveling Doctor
-	| 'VermillionHereafter' //Vermillion Hereafter
-	| 'ViridescentVenerer' //Viridescent Venerer
-	| 'WanderersTroupe'; //Wanderer's Troupe
 export interface ISubstat {
 	key: SubstatKey;
 	value: number;
 }
 export interface IArtifact {
-	setKey: ArtifactSetKey; //e.g. "GladiatorsFinale"
+	setKey: ArtifactKey; //e.g. "GladiatorsFinale"
 	slotKey: SlotKey; //e.g. "plume"
 	level: number; //0-20 inclusive
 	rarity: number; //1-5 inclusive

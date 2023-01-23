@@ -1,5 +1,5 @@
-import type { CharacterKey } from 'shared';
-import type { ArtifactSetKey, IGOOD, SlotKey, StatKey, SubstatKey } from './good';
+import type { ArtifactKey, CharacterKey } from 'shared';
+import type { IGOOD, SlotKey, StatKey, SubstatKey } from './good';
 
 export interface IBuild {
 	character: ICharacterBuild;
@@ -33,7 +33,7 @@ type IArtifactBuild = Partial<{
 export type IArtifact<T extends SlotKey> = T extends 'flower' | 'plume'
 	? {
 			type: 'flower' | 'plume';
-			set: ArtifactSetKey;
+			set: ArtifactKey;
 			level: number;
 			rarity: number;
 			substatOne: SubstatKey | undefined;
@@ -47,7 +47,7 @@ export type IArtifact<T extends SlotKey> = T extends 'flower' | 'plume'
 	  }
 	: {
 			type: 'sands' | 'goblet' | 'circlet';
-			set: ArtifactSetKey;
+			set: ArtifactKey;
 			level: number;
 			rarity: number;
 			mainstat: StatKey;

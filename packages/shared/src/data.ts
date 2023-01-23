@@ -4865,6 +4865,7 @@ export const characterInfo = {
     statBuff: "Geo DMG Bonus",
   },
 };
+
 export type ArtifactKey =
   | "Initiate"
   | "Adventurer"
@@ -4910,6 +4911,53 @@ export type ArtifactKey =
   | "GildedDreams"
   | "DesertPavilionChronicle"
   | "FlowerOfParadiseLost";
+export const artifacts: ArtifactKey[] = [
+  "Initiate",
+  "Adventurer",
+  "LuckyDog",
+  "TravelingDoctor",
+  "ResolutionOfSojourner",
+  "TinyMiracle",
+  "Berserker",
+  "Instructor",
+  "TheExile",
+  "DefendersWill",
+  "BraveHeart",
+  "MartialArtist",
+  "Gambler",
+  "Scholar",
+  "PrayersForWisdom",
+  "PrayersForDestiny",
+  "PrayersForIllumination",
+  "PrayersToSpringtime",
+  "GladiatorsFinale",
+  "WanderersTroupe",
+  "NoblesseOblige",
+  "BloodstainedChivalry",
+  "MaidenBeloved",
+  "ViridescentVenerer",
+  "ArchaicPetra",
+  "RetracingBolide",
+  "Thundersoother",
+  "ThunderingFury",
+  "Lavawalker",
+  "CrimsonWitchOfFlames",
+  "BlizzardStrayer",
+  "HeartOfDepth",
+  "TenacityOfTheMillelith",
+  "PaleFlame",
+  "ShimenawasReminiscence",
+  "EmblemOfSeveredFate",
+  "HuskOfOpulentDreams",
+  "OceanHuedClam",
+  "VermillionHereafter",
+  "EchoesOfAnOffering",
+  "DeepwoodMemories",
+  "GildedDreams",
+  "DesertPavilionChronicle",
+  "FlowerOfParadiseLost",
+];
+export const artifactIDs = toIdedObj(artifacts);
 export const ArtifactInfo = {
   Initiate: { set: "Initiate", bonus: [] },
   Adventurer: {
