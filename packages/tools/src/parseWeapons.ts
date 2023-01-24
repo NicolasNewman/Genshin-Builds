@@ -43,7 +43,7 @@ const exportData = (data: { [key: string]: any }) => {
       ([
         weaponType,
         arr,
-      ]) => `export const ${weaponType.toLocaleLowerCase()} = [${toString(
+      ]) => `export const ${weaponType.toLocaleLowerCase()}: WeaponKey[] = [${toString(
         arr
       ).toString()}];
 export const ${weaponType.toLocaleLowerCase()}IDs = toIdedObj(${weaponType.toLocaleLowerCase()});`

@@ -35,7 +35,7 @@ const exportData = (data: { [key: string]: any }) => {
    *      Created an object var containing all the compiled character data
    */
   return `import { toIdedObj } from './index';
-export type AscensionKey = "0" | "1" | "2" | "3" | "4" | "5" | "6";
+export type AscensionKey = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type Element = ${toString(Object.keys(elements)).join(" | ")};
 export type WeaponType = ${toString(Object.keys(weapons)).join(" | ")};
 export type StatBuff = ${toString(Object.keys(buffs)).join(" | ")};
@@ -43,7 +43,7 @@ export type CharacterKey = ${toString(names).join(" | ")};
 export const characters: CharacterKey[] = [${toString(names).toString()}];
 \$##\$
 export const characterIDs = toIdedObj(characters);
-export const characterWeapons: { [key in CharacterKey]: string[] } = {
+export const characterWeapons: { [key in CharacterKey]: WeaponKey[] } = {
 	${Object.entries<{ element: string; weapon: string; statBuff: string }>(data)
     .map(
       ([character, { weapon }]) =>
