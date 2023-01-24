@@ -35,9 +35,10 @@ const exportData = (data: { [key: string]: any }) => {
    *      Created an object var containing all the compiled character data
    */
   return `import { toIdedObj } from './index';
-export type Elements = ${toString(Object.keys(elements)).join(" | ")};
-export type WeaponTypes = ${toString(Object.keys(weapons)).join(" | ")};
-export type StatBuffs = ${toString(Object.keys(buffs)).join(" | ")};
+export type AscensionKey = "0" | "1" | "2" | "3" | "4" | "5" | "6";
+export type Element = ${toString(Object.keys(elements)).join(" | ")};
+export type WeaponType = ${toString(Object.keys(weapons)).join(" | ")};
+export type StatBuff = ${toString(Object.keys(buffs)).join(" | ")};
 export type CharacterKey = ${toString(names).join(" | ")};
 export const characters: CharacterKey[] = [${toString(names).toString()}];
 \$##\$
@@ -58,7 +59,14 @@ export const characterWeaponIDs: { [key in CharacterKey]: { [key: string]: numbe
     )
     .join("\n")}
 }
-export const characterInfo = ${JSON.stringify(data)};`;
+export const characterInfo: {
+  [key in CharacterKey]: {
+    element: Element,
+    weapon: WeaponType,
+    statBuff: StatBuff,
+    stats: {[key in AscensionKey]: {HP: number, ATK: number, DEF: number, SP: number}[]}
+  }
+} = ${JSON.stringify(data)};`;
 };
 
 const parseCharacters = async (threads: number = 6) => {
@@ -70,6 +78,8 @@ const parseCharacters = async (threads: number = 6) => {
       // 		console.log(await msgArgs[i].jsonValue());
       // 	}
       // });
+      const dlog = (msg: any) => console.log(msg);
+      await page.exposeFunction("dlog", dlog);
       console.log("Processing: " + request.url);
       if (request.url.includes("Character")) {
         const selector = "tbody > tr";
@@ -158,10 +168,22 @@ const parseCharacters = async (threads: number = 6) => {
                   .item(4)
                   ?.textContent?.replace(/[^0-9]/g, "");
                 SP = $tr.children.item(5)?.textContent?.replace(/[^0-9]/g, "");
-                if (ascension && level) {
-                  stats[ascension] = {
-                    [level[0]]: { HP, ATK, DEF, SP },
-                  };
+                if (
+                  ascension &&
+                  level &&
+                  HP &&
+                  ATK &&
+                  DEF &&
+                  SP !== undefined
+                ) {
+                  const pSP = parseInt(SP);
+                  stats[ascension] = [];
+                  stats[ascension].push({
+                    HP: parseInt(HP),
+                    ATK: parseInt(ATK),
+                    DEF: parseInt(DEF),
+                    SP: Number.isNaN(pSP) ? 0 : pSP,
+                  });
                 }
               } else if (len === 4) {
                 const level = $tr.children.item(0)?.textContent?.split("/");
@@ -174,8 +196,21 @@ const parseCharacters = async (threads: number = 6) => {
                 const DEF = $tr.children
                   .item(3)
                   ?.textContent?.replace(/[^0-9]/g, "");
-                if (ascension && level) {
-                  stats[ascension][level[0]] = { HP, ATK, DEF, SP };
+                if (
+                  ascension &&
+                  level &&
+                  HP &&
+                  ATK &&
+                  DEF &&
+                  SP !== undefined
+                ) {
+                  const pSP = parseInt(SP);
+                  stats[ascension].push({
+                    HP: parseInt(HP),
+                    ATK: parseInt(ATK),
+                    DEF: parseInt(DEF),
+                    SP: Number.isNaN(pSP) ? 0 : pSP,
+                  });
                 }
               }
             }
