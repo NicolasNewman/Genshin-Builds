@@ -50,7 +50,16 @@ export const ${weaponType.toLocaleLowerCase()}IDs = toIdedObj(${weaponType.toLoc
     )
     .join("\n")}
 export type WeaponKey = ${toString(weapons).join(" | ")};
-export const WeaponInfo = ${JSON.stringify(data)}
+export const weaponInfo: {
+  [key in WeaponKey]: {
+    name: string,
+    statBuff: StatBuff | null,
+    stats: {
+      [key in AscensionKey]: {ATK: number, SP: number}[]
+    } | null,
+    type: WeaponType
+  }
+} = ${JSON.stringify(data)}
 `;
 };
 
@@ -58,12 +67,8 @@ const parseWeapons = async (threads: number) => {
   const crawler = new PuppeteerCrawler({
     // Function called for each URL
     async requestHandler({ request, page, enqueueLinks, crawler }) {
-      // page.on('console', async (msg) => {
-      // 	const msgArgs = msg.args();
-      // 	for (let i = 0; i < msgArgs.length; ++i) {
-      // 		console.log(await msgArgs[i].jsonValue());
-      // 	}
-      // });
+      const dlog = (msg: any) => console.log(msg);
+      await page.exposeFunction("dlog", dlog);
       console.log("Processing: " + request.url);
       if (request.url.includes("Weapon")) {
         const selector = "tbody > tr";
@@ -80,10 +85,12 @@ const parseWeapons = async (threads: number) => {
                   icon &&
                   name?.textContent &&
                   name.textContent !== "Name" &&
+                  !name.textContent.includes("Prized Isshin Blade") &&
                   ATK?.textContent &&
                   STAT?.textContent
                 ) {
                   const weaponName = name.textContent.replace(/\n/g, "");
+                  const statBuff = STAT.textContent.replace(/ [0-9].*\n/g, "");
                   const obj = {
                     name: weaponName,
                     key: weaponName
@@ -91,8 +98,9 @@ const parseWeapons = async (threads: number) => {
                       .split(" ") // split by word
                       .map((w) => w[0].toUpperCase() + w.substring(1)) // make first letter of each word capital
                       .join(""), // rejoin
-                    statBuff: STAT.textContent.replace(/ [0-9].*\n/g, ""),
+                    statBuff: statBuff.includes("None") ? null : statBuff,
                   };
+                  dlog(obj);
                   return obj;
                 } else {
                   return `Failed for: ${name?.innerHTML ?? "undefined"}`;
@@ -102,14 +110,15 @@ const parseWeapons = async (threads: number) => {
           })
         )
           .filter(
-            (obj): obj is { name: string; key: string; statBuff: string } =>
+            (
+              obj
+            ): obj is { name: string; key: string; statBuff: string | null } =>
               obj != null && // check null & undefined
               typeof obj === "object" &&
               obj.name != null &&
-              obj.key != null &&
-              obj.statBuff != null
+              obj.key != null
           )
-          .reduce<{ [key: string]: { name: string; statBuff: string } }>(
+          .reduce<{ [key: string]: { name: string; statBuff: string | null } }>(
             (prev, curr) => {
               return {
                 ...prev,
@@ -122,6 +131,7 @@ const parseWeapons = async (threads: number) => {
           getUrl(weaponData[key].name)
         );
         console.log(urls);
+        console.log(weaponData);
         await enqueueLinks({ urls });
         await Actor.setValue("weapons", weaponData);
       } else {
@@ -153,10 +163,12 @@ const parseWeapons = async (threads: number) => {
                 const SP = $tr.children
                   .item(3)
                   ?.textContent?.replace(/[^0-9]/g, "");
-                if (ascension && level) {
-                  stats[ascension] = {
-                    [level[0]]: { ATK, SP },
-                  };
+                if (ascension && level && ATK && SP !== undefined) {
+                  stats[ascension] = [];
+                  stats[ascension].push({
+                    ATK: parseInt(ATK),
+                    SP: parseInt(SP),
+                  });
                 }
               } else if (len === 3) {
                 const level = $tr.children.item(0)?.textContent?.split("/");
@@ -167,8 +179,11 @@ const parseWeapons = async (threads: number) => {
                   .item(2)
                   ?.textContent?.replace(/[^0-9]/g, "");
 
-                if (ascension && level) {
-                  stats[ascension][level[0]] = { ATK, SP };
+                if (ascension && level && ATK && SP !== undefined) {
+                  stats[ascension].push({
+                    ATK: parseInt(ATK),
+                    SP: parseInt(SP),
+                  });
                 }
               }
             }
@@ -184,7 +199,7 @@ const parseWeapons = async (threads: number) => {
 
         if (weapon) {
           const data: any = await Actor.getValue("weapons");
-          data[weapon].stats = stats;
+          data[weapon].stats = Object.keys(stats).length === 0 ? null : stats;
           data[weapon].type = weaponType ?? "";
           await Actor.setValue("weapons", data);
         }
