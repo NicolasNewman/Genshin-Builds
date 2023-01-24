@@ -12,6 +12,10 @@ export function toGoodKey(str: string) {
     .join(""); // rejoin
 }
 
+export function toStringArray(arr: any[]) {
+  return arr.map((v) => v.toString());
+}
+
 /**
  *
  * @param arr array of input values
