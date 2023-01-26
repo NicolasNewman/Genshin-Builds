@@ -1,4 +1,16 @@
 export * from "./data";
+
+/**
+ * Object.entries alternative that preserves key typing
+ * @param obj
+ * @returns array of [key, value] pairs with the type of the key preserved
+ */
+export function getEntries<T extends object>(obj: T) {
+  return Object.entries(obj) as {
+    [K in keyof T]: [K, T[K]];
+  }[keyof T][];
+}
+
 /**
  * Converts a string to a valid GOOD key
  * @param str
