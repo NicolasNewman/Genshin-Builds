@@ -72,12 +72,6 @@ export const characterInfo: {
 const parseCharacters = async (threads: number = 6) => {
   const crawler = new PuppeteerCrawler({
     async requestHandler({ request, page, enqueueLinks }) {
-      // page.on('console', async (msg) => {
-      // 	const msgArgs = msg.args();
-      // 	for (let i = 0; i < msgArgs.length; ++i) {
-      // 		console.log(await msgArgs[i].jsonValue());
-      // 	}
-      // });
       const dlog = (msg: any) => console.log(msg);
       await page.exposeFunction("dlog", dlog);
       console.log("Processing: " + request.url);
@@ -167,7 +161,9 @@ const parseCharacters = async (threads: number = 6) => {
                 const DEF = $tr.children
                   .item(4)
                   ?.textContent?.replace(/[^0-9]/g, "");
-                SP = $tr.children.item(5)?.textContent?.replace(/[^0-9]/g, "");
+                SP = $tr.children
+                  .item(5)
+                  ?.textContent?.replace(/[^0-9\.]/g, "");
                 if (
                   ascension &&
                   level &&
@@ -176,7 +172,7 @@ const parseCharacters = async (threads: number = 6) => {
                   DEF &&
                   SP !== undefined
                 ) {
-                  const pSP = parseInt(SP);
+                  const pSP = parseFloat(SP);
                   stats[ascension] = [];
                   stats[ascension].push({
                     HP: parseInt(HP),
@@ -204,7 +200,7 @@ const parseCharacters = async (threads: number = 6) => {
                   DEF &&
                   SP !== undefined
                 ) {
-                  const pSP = parseInt(SP);
+                  const pSP = parseFloat(SP);
                   stats[ascension].push({
                     HP: parseInt(HP),
                     ATK: parseInt(ATK),
@@ -232,7 +228,6 @@ const parseCharacters = async (threads: number = 6) => {
   const characters: { [key: string]: any } | null = await Actor.getValue(
     "characters"
   );
-  console.log(characters);
   if (characters) {
     return exportData(characters);
   }

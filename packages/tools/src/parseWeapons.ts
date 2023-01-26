@@ -162,12 +162,12 @@ const parseWeapons = async (threads: number) => {
                   ?.textContent?.replace(/[^0-9]/g, "");
                 const SP = $tr.children
                   .item(3)
-                  ?.textContent?.replace(/[^0-9]/g, "");
+                  ?.textContent?.replace(/[^0-9\.]/g, "");
                 if (ascension && level && ATK && SP !== undefined) {
                   stats[ascension] = [];
                   stats[ascension].push({
                     ATK: parseInt(ATK),
-                    SP: parseInt(SP),
+                    SP: parseFloat(SP),
                   });
                 }
               } else if (len === 3) {
@@ -177,12 +177,12 @@ const parseWeapons = async (threads: number) => {
                   ?.textContent?.replace(/[^0-9]/g, "");
                 const SP = $tr.children
                   .item(2)
-                  ?.textContent?.replace(/[^0-9]/g, "");
+                  ?.textContent?.replace(/[^0-9\.]/g, "");
 
                 if (ascension && level && ATK && SP !== undefined) {
                   stats[ascension].push({
                     ATK: parseInt(ATK),
-                    SP: parseInt(SP),
+                    SP: parseFloat(SP),
                   });
                 }
               }
