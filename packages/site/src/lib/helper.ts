@@ -13,11 +13,11 @@ import type { SubstatKey } from '../types/good';
  */
 export const roundSubStat = (key: SubstatKey | '_', value: number) => {
 	if (key === 'atk' || key === 'def' || key === 'hp' || key === 'eleMas') {
-		return Math.round(value).toString();
+		return Math.round(value);
 	} else if (key === '_') {
-		return '0';
+		return 0;
 	} else {
-		return (Math.round(value * 10) / 10).toString();
+		return Math.round(value * 10) / 10;
 	}
 };
 

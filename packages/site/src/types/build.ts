@@ -1,4 +1,4 @@
-import type { ArtifactKey, CharacterKey } from 'shared';
+import type { ArtifactKey, AscensionKey, CharacterKey, WeaponKey } from 'shared';
 import type { IGOOD, SlotKey, StatKey, SubstatKey } from './good';
 
 export interface IBuild {
@@ -9,7 +9,7 @@ export interface IBuild {
 
 interface ICharacterBuild {
 	character: CharacterKey;
-	ascension: number;
+	ascension: AscensionKey;
 	level: number;
 	talent: {
 		auto: number;
@@ -20,8 +20,8 @@ interface ICharacterBuild {
 }
 
 interface IWeaponBuild {
-	weapon: string;
-	ascension: number;
+	weapon: WeaponKey;
+	ascension: AscensionKey;
 	level: number;
 	refinement: number;
 }
@@ -37,13 +37,13 @@ export type IArtifact<T extends SlotKey> = T extends 'flower' | 'plume'
 			level: number;
 			rarity: number;
 			substatOne: SubstatKey | undefined;
-			substatOneRoll: string;
+			substatOneRoll: number;
 			substatTwo: SubstatKey | undefined;
-			substatTwoRoll: string;
+			substatTwoRoll: number;
 			substatThree: SubstatKey | undefined;
-			substatThreeRoll: string;
+			substatThreeRoll: number;
 			substatFour: SubstatKey | undefined;
-			substatFourRoll: string;
+			substatFourRoll: number;
 	  }
 	: {
 			type: 'sands' | 'goblet' | 'circlet';
@@ -52,11 +52,11 @@ export type IArtifact<T extends SlotKey> = T extends 'flower' | 'plume'
 			rarity: number;
 			mainstat: StatKey;
 			substatOne: SubstatKey | undefined;
-			substatOneRoll: string;
+			substatOneRoll: number;
 			substatTwo: SubstatKey | undefined;
-			substatTwoRoll: string;
+			substatTwoRoll: number;
 			substatThree: SubstatKey | undefined;
-			substatThreeRoll: string;
+			substatThreeRoll: number;
 			substatFour: SubstatKey | undefined;
-			substatFourRoll: string;
+			substatFourRoll: number;
 	  };

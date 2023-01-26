@@ -10,7 +10,8 @@ import {
 	characterIDs,
 	characters,
 	characterWeaponIDs,
-	characterWeapons
+	characterWeapons,
+	type AscensionKey
 } from 'shared';
 import type { IBuild } from '../types/build';
 import type { IGOOD } from '../types/good';
@@ -236,7 +237,8 @@ function localDecode(str: string): IBuild {
 	const build: IBuild = {
 		character: {
 			character,
-			ascension: parseInt(str.substring(7, 10), 2),
+			// TODO: don't use as
+			ascension: parseInt(str.substring(7, 10), 2) as AscensionKey,
 			level: parseInt(str.substring(10, 17), 2),
 			talent: {
 				auto: parseInt(str.substring(17, 21), 2),
@@ -247,7 +249,7 @@ function localDecode(str: string): IBuild {
 		},
 		weapon: {
 			weapon: characterWeapons[character][parseInt(str.substring(32, 38), 2) - 1],
-			ascension: parseInt(str.substring(38, 41), 2),
+			ascension: parseInt(str.substring(38, 41), 2) as AscensionKey,
 			level: parseInt(str.substring(41, 48), 2),
 			refinement: parseInt(str.substring(48, 51), 2)
 		},
@@ -262,23 +264,19 @@ function localDecode(str: string): IBuild {
 
 	let substatOneIndx = parseInt(str.substring(65, 69), 2);
 	let substatOne = artifactSS[substatOneIndx - 1] ?? '_';
-	let substatOneRoll =
-		subStatValues[rarity][substatOne][parseInt(str.substring(69, 75), 2)].toString();
+	let substatOneRoll = subStatValues[rarity][substatOne][parseInt(str.substring(69, 75), 2)];
 
 	let substatTwoIndx = parseInt(str.substring(75, 79), 2);
 	let substatTwo = artifactSS[substatTwoIndx - 1] ?? '_';
-	let substatTwoRoll =
-		subStatValues[rarity][substatTwo][parseInt(str.substring(79, 85), 2)].toString();
+	let substatTwoRoll = subStatValues[rarity][substatTwo][parseInt(str.substring(79, 85), 2)];
 
 	let substatThreeIndx = parseInt(str.substring(85, 89), 2);
 	let substatThree = artifactSS[substatThreeIndx - 1] ?? '_';
-	let substatThreeRoll =
-		subStatValues[rarity][substatThree][parseInt(str.substring(89, 95), 2)].toString();
+	let substatThreeRoll = subStatValues[rarity][substatThree][parseInt(str.substring(89, 95), 2)];
 
 	let substatFourIndx = parseInt(str.substring(95, 99), 2);
 	let substatFour = artifactSS[substatFourIndx - 1] ?? '_';
-	let substatFourRoll =
-		subStatValues[rarity][substatFour][parseInt(str.substring(99, 105), 2)].toString();
+	let substatFourRoll = subStatValues[rarity][substatFour][parseInt(str.substring(99, 105), 2)];
 
 	build.artifacts.flower = {
 		type: 'flower',
@@ -305,23 +303,19 @@ function localDecode(str: string): IBuild {
 
 	substatOneIndx = parseInt(str.substring(119, 123), 2);
 	substatOne = artifactSS[substatOneIndx - 1] ?? '_';
-	substatOneRoll =
-		subStatValues[rarity][substatOne][parseInt(str.substring(123, 129), 2)].toString();
+	substatOneRoll = subStatValues[rarity][substatOne][parseInt(str.substring(123, 129), 2)];
 
 	substatTwoIndx = parseInt(str.substring(129, 133), 2);
 	substatTwo = artifactSS[substatTwoIndx - 1] ?? '_';
-	substatTwoRoll =
-		subStatValues[rarity][substatTwo][parseInt(str.substring(133, 139), 2)].toString();
+	substatTwoRoll = subStatValues[rarity][substatTwo][parseInt(str.substring(133, 139), 2)];
 
 	substatThreeIndx = parseInt(str.substring(139, 143), 2);
 	substatThree = artifactSS[substatThreeIndx - 1] ?? '_';
-	substatThreeRoll =
-		subStatValues[rarity][substatThree][parseInt(str.substring(143, 149), 2)].toString();
+	substatThreeRoll = subStatValues[rarity][substatThree][parseInt(str.substring(143, 149), 2)];
 
 	substatFourIndx = parseInt(str.substring(149, 153), 2);
 	substatFour = artifactSS[substatFourIndx - 1] ?? '_';
-	substatFourRoll =
-		subStatValues[rarity][substatFour][parseInt(str.substring(153, 159), 2)].toString();
+	substatFourRoll = subStatValues[rarity][substatFour][parseInt(str.substring(153, 159), 2)];
 
 	build.artifacts.plume = {
 		type: 'plume',
@@ -349,23 +343,19 @@ function localDecode(str: string): IBuild {
 
 	substatOneIndx = parseInt(str.substring(178, 182), 2);
 	substatOne = artifactSS[substatOneIndx - 1] ?? '_';
-	substatOneRoll =
-		subStatValues[rarity][substatOne][parseInt(str.substring(182, 188), 2)].toString();
+	substatOneRoll = subStatValues[rarity][substatOne][parseInt(str.substring(182, 188), 2)];
 
 	substatTwoIndx = parseInt(str.substring(188, 192), 2);
 	substatTwo = artifactSS[substatTwoIndx - 1] ?? '_';
-	substatTwoRoll =
-		subStatValues[rarity][substatTwo][parseInt(str.substring(192, 198), 2)].toString();
+	substatTwoRoll = subStatValues[rarity][substatTwo][parseInt(str.substring(192, 198), 2)];
 
 	substatThreeIndx = parseInt(str.substring(198, 202), 2);
 	substatThree = artifactSS[substatThreeIndx - 1] ?? '_';
-	substatThreeRoll =
-		subStatValues[rarity][substatThree][parseInt(str.substring(202, 208), 2)].toString();
+	substatThreeRoll = subStatValues[rarity][substatThree][parseInt(str.substring(202, 208), 2)];
 
 	substatFourIndx = parseInt(str.substring(208, 212), 2);
 	substatFour = artifactSS[substatFourIndx - 1] ?? '_';
-	substatFourRoll =
-		subStatValues[rarity][substatFour][parseInt(str.substring(212, 218), 2)].toString();
+	substatFourRoll = subStatValues[rarity][substatFour][parseInt(str.substring(212, 218), 2)];
 
 	build.artifacts.sands = {
 		type: 'sands',
@@ -393,23 +383,19 @@ function localDecode(str: string): IBuild {
 
 	substatOneIndx = parseInt(str.substring(237, 241), 2);
 	substatOne = artifactSS[substatOneIndx - 1] ?? '_';
-	substatOneRoll =
-		subStatValues[rarity][substatOne][parseInt(str.substring(241, 247), 2)].toString();
+	substatOneRoll = subStatValues[rarity][substatOne][parseInt(str.substring(241, 247), 2)];
 
 	substatTwoIndx = parseInt(str.substring(247, 251), 2);
 	substatTwo = artifactSS[substatTwoIndx - 1] ?? '_';
-	substatTwoRoll =
-		subStatValues[rarity][substatTwo][parseInt(str.substring(251, 257), 2)].toString();
+	substatTwoRoll = subStatValues[rarity][substatTwo][parseInt(str.substring(251, 257), 2)];
 
 	substatThreeIndx = parseInt(str.substring(257, 261), 2);
 	substatThree = artifactSS[substatThreeIndx - 1] ?? '_';
-	substatThreeRoll =
-		subStatValues[rarity][substatThree][parseInt(str.substring(261, 267), 2)].toString();
+	substatThreeRoll = subStatValues[rarity][substatThree][parseInt(str.substring(261, 267), 2)];
 
 	substatFourIndx = parseInt(str.substring(267, 271), 2);
 	substatFour = artifactSS[substatFourIndx - 1] ?? '_';
-	substatFourRoll =
-		subStatValues[rarity][substatFour][parseInt(str.substring(271, 277), 2)].toString();
+	substatFourRoll = subStatValues[rarity][substatFour][parseInt(str.substring(271, 277), 2)];
 
 	build.artifacts.goblet = {
 		type: 'goblet',
@@ -436,23 +422,19 @@ function localDecode(str: string): IBuild {
 
 	substatOneIndx = parseInt(str.substring(296, 300), 2);
 	substatOne = artifactSS[substatOneIndx - 1] ?? '_';
-	substatOneRoll =
-		subStatValues[rarity][substatOne][parseInt(str.substring(300, 306), 2)].toString();
+	substatOneRoll = subStatValues[rarity][substatOne][parseInt(str.substring(300, 306), 2)];
 
 	substatTwoIndx = parseInt(str.substring(306, 310), 2);
 	substatTwo = artifactSS[substatTwoIndx - 1] ?? '_';
-	substatTwoRoll =
-		subStatValues[rarity][substatTwo][parseInt(str.substring(310, 316), 2)].toString();
+	substatTwoRoll = subStatValues[rarity][substatTwo][parseInt(str.substring(310, 316), 2)];
 
 	substatThreeIndx = parseInt(str.substring(316, 320), 2);
 	substatThree = artifactSS[substatThreeIndx - 1] ?? '_';
-	substatThreeRoll =
-		subStatValues[rarity][substatThree][parseInt(str.substring(320, 326), 2)].toString();
+	substatThreeRoll = subStatValues[rarity][substatThree][parseInt(str.substring(320, 326), 2)];
 
 	substatFourIndx = parseInt(str.substring(326, 330), 2);
 	substatFour = artifactSS[substatFourIndx - 1] ?? '_';
-	substatFourRoll =
-		subStatValues[rarity][substatFour][parseInt(str.substring(330, 336), 2)].toString();
+	substatFourRoll = subStatValues[rarity][substatFour][parseInt(str.substring(330, 336), 2)];
 
 	build.artifacts.circlet = {
 		type: 'circlet',
