@@ -79,6 +79,13 @@ export function truncateName(name: string) {
   }
 }
 
+export function truncateWeapon(weapon: string) {
+  if (weapon === "ThrillingTalesOfDragonSlayers") {
+    return "Thrilling Tales";
+  }
+  return weapon;
+}
+
 /**
  * Seperates a camel cased string into seperate words
  * i.e.:
