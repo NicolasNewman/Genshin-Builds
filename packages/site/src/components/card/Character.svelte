@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { getAcensionLevel } from 'shared';
+	import { getAcensionLevel, truncateName } from 'shared';
 	import type { IBuild } from '../../types/build';
 	export let build: IBuild;
 
@@ -10,7 +10,7 @@
 <div class="relative h-full z-10">
 	<div class="info flex justify-between flex-col h-full text-lg">
 		<div class="m-1">
-			<div class="text-2xl">{character}</div>
+			<div class="text-2xl">{truncateName(character)}</div>
 			<div>Lvl. {level}/<span class="text-sm">{getAcensionLevel(ascension)}</span></div>
 		</div>
 		<div class="m-1">
