@@ -1,18 +1,21 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { getAcensionLevel, seperateCamelCase } from 'shared';
+	import { computeBuildStats, JoinedStatToName } from '$lib/build';
+	import { getAcensionLevel, getEntries, seperateCamelCase, truncateWeapon } from 'shared';
 	import type { IBuild } from '../../types/build';
 	export let build: IBuild;
 
 	const weapon = build.weapon;
+	// const { circlet, flower, goblet, plume, sands } = build.artifacts;
+	const stats = computeBuildStats(build);
 </script>
 
-<div class="relative h-full z-10">
-	<div class="info flex justify-between flex-col h-full text-lg">
+<div class="relative h-full z-10 ml-4">
+	<div class="info flex justify-around flex-col h-full text-lg">
 		<div class="flex items-center mt-4">
 			<img class="w-16 h-16" src="{base}/weapons/{weapon?.weapon}.png" alt="Weapon Icon" />
 			<div class="flex flex-col items-center">
-				<div class="text-center">{seperateCamelCase(weapon?.weapon ?? '')}</div>
+				<div class="text-center">{seperateCamelCase(truncateWeapon(weapon?.weapon ?? ''))}</div>
 				<div class="flex">
 					<div class="text-sm p-1 m-1 rounded bg-white/[.2]">
 						Lvl. {weapon?.level}/<span class="text-xs"
@@ -23,5 +26,28 @@
 				</div>
 			</div>
 		</div>
+		<div class="grid grid-cols-2 gap-x-3">
+			{#each getEntries(stats) as stat}
+				{#if stat[1] > 0}
+					{@const isPercent = stat[0].includes('_')}
+					<div>
+						<div class="stat-icon" style="mask-image: url({base}/icons/{stat[0]}.svg)" />
+						{isPercent ? stat[1].toFixed(1) : stat[1].toLocaleString('en-us')}{isPercent ? '%' : ''}
+					</div>
+				{/if}
+			{/each}
+		</div>
 	</div>
 </div>
+
+<style>
+	.stat-icon {
+		width: 16px;
+		height: 16px;
+		background-color: white;
+		mask-size: contain;
+		mask-position: center;
+		mask-repeat: no-repeat;
+		display: inline-block;
+	}
+</style>
