@@ -3,15 +3,34 @@
  *
  * Contains lists of in-game names and their mapping to IDs
  */
-import { toIdedObj } from 'shared';
+import { toIdedObj, type AscensionKey } from 'shared';
 import type { StatKey, SubstatKey } from '../types/good';
+
+export const ascensionLevelRange = (ascension: AscensionKey) => {
+	switch (ascension) {
+		case 0:
+			return [0, 20];
+		case 1:
+			return [20, 40];
+		case 2:
+			return [40, 50];
+		case 3:
+			return [50, 60];
+		case 4:
+			return [60, 70];
+		case 5:
+			return [70, 80];
+		case 6:
+			return [80, 90];
+	}
+};
 
 export const artifactMS: StatKey[] = [
 	'hp', //HP
 	'hp_', //HP%
 	'atk', //ATK
 	'atk_', //ATK%
-	'def', //DEF
+	// 'def', //DEF
 	'def_', //DEF%
 	'eleMas', //Elemental Mastery
 	'enerRech_', //Energy Recharge
