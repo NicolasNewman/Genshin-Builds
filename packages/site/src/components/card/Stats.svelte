@@ -15,7 +15,9 @@
 		<div class="flex items-center mt-4">
 			<img class="w-16 h-16" src="{base}/weapons/{weapon?.weapon}.png" alt="Weapon Icon" />
 			<div class="flex flex-col items-center">
-				<div class="text-center">{seperateCamelCase(truncateWeapon(weapon?.weapon ?? ''))}</div>
+				<div class="text-center stat">
+					{seperateCamelCase(truncateWeapon(weapon?.weapon ?? ''))}
+				</div>
 				<div class="flex">
 					<div class="text-sm p-1 m-1 rounded bg-white/[.2]">
 						Lvl. {weapon?.level}/<span class="text-xs"
@@ -30,7 +32,7 @@
 			{#each getEntries(stats) as stat}
 				{#if stat[1] > 0}
 					{@const isPercent = stat[0].includes('_')}
-					<div>
+					<div class="stat">
 						<div class="stat-icon" style="mask-image: url({base}/icons/{stat[0]}.svg)" />
 						{isPercent ? stat[1].toFixed(1) : stat[1].toLocaleString('en-us')}{isPercent ? '%' : ''}
 					</div>
@@ -49,5 +51,9 @@
 		mask-position: center;
 		mask-repeat: no-repeat;
 		display: inline-block;
+	}
+
+	.stat {
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
 	}
 </style>
