@@ -28,9 +28,3 @@
 		{/if}
 	</div>
 </div>
-
-<style>
-	.info {
-		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-	}
-</style>
