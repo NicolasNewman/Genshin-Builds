@@ -83,7 +83,7 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 	map['atk'] += characterBuffs.ATK;
 	map['def'] += characterBuffs.DEF;
 	map['hp'] += characterBuffs.HP;
-	if (weapon) {
+	if (weapon?.weapon) {
 		const { statBuff, stats } = weaponInfo[weapon.weapon];
 		if (statBuff !== null && stats !== null) {
 			const weaponAscensionStat = StatBuffToJoinedStat[statBuff];
