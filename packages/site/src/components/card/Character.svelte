@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<div
-		class="absolute top-0 left-0 -z-10 w-full h-full bg-cover bg-center brightness-75"
+		class="absolute top-0 left-0 -z-10 w-full h-full bg-cover bg-center brightness-90"
 		style="background-image: url({base}/characters/{character}.png)"
 	/>
 </div>
