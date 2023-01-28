@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Paper, { Content } from '@smui/paper';
+	import { characterInfo } from 'shared';
 	import type { IBuild } from '../../types/build';
 	import Artifacts from './Artifacts.svelte';
 	import Character from './Character.svelte';
@@ -10,6 +11,7 @@
 <div class="paper-container w-[740px] h-[272px]">
 	<div
 		class="flex min-h-full paper smui-paper smui-paper--raised smui-paper--elevation-z1 smui-paper--rounded"
+		style="background: var(--{characterInfo[build.character.character].element})"
 	>
 		<div class="w-[200px] min-h-full">
 			<Character {build} />
