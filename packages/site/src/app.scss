@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$anemo: #80ffe6;
+$anemo-dark: darken($anemo, 50%);
+$cryo: #55ddff;
+$cryo-dark: darken($cryo, 25%);
+$dendro: #a5c83b;
+$dendro-dark: darken($dendro, 10%);
+$electro: #b380ff;
+$electro-dark: darken($electro, 10%);
+$geo: #fc0;
+$geo-dark: darken($geo, 10%);
+$hydro: #3e99ff;
+$hydro-dark: darken($hydro, 25%);
+$pyro: #f95;
+$pyro-dark: darken($pyro, 25%);
