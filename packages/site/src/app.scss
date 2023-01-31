@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './scss/fontawesome/fontawesome';
+@import './scss/fontawesome/solid';
+@import './scss/fontawesome/brands';
+
 $anemo: #80ffe6;
 $anemo-dark: darken($anemo, 50%);
 $cryo: #55ddff;

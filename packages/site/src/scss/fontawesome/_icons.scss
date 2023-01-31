@@ -1,0 +1,10 @@
+
+$subset: (
+	envelope: $fa-var-envelope,
+image: $fa-var-image,
+download: $fa-var-download,
+house: $fa-var-house,
+);
+@each $name, $icon in $subset {
+  .#{$fa-css-prefix}-#{$name}::before { content: unquote("\"#{ $icon }\""); }
+}
