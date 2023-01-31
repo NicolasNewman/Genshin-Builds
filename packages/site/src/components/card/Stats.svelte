@@ -11,8 +11,8 @@
 </script>
 
 <div class="relative h-full z-10 ml-4">
-	<div class="info flex justify-around flex-col h-full text-lg">
-		<div class="flex items-center mt-4">
+	<div class="info flex flex-col h-full text-lg">
+		<div class="flex items-center mt-3">
 			<img class="w-16 h-16" src="{base}/weapons/{weapon?.weapon}.png" alt="Weapon Icon" />
 			<div class="flex flex-col items-center">
 				<div class="text-center stat">
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="grid grid-cols-2 gap-x-3">
+		<div class="grid grid-cols-2 gap-x-3 mt-1">
 			{#each getEntries(stats) as stat}
 				{#if stat[1] > 0}
 					{@const isPercent = stat[0].includes('_')}
