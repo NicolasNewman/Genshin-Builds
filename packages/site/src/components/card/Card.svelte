@@ -8,7 +8,7 @@
 	export let build: IBuild;
 </script>
 
-<div class="paper-container overflow-hidden w-[740px] h-[272px]">
+<div class="paper-container overflow-hidden w-[740px] h-[276px]">
 	<div
 		class="flex min-h-full paper smui-paper smui-paper--raised smui-paper--elevation-z1 smui-paper--rounded"
 		style="background: var(--{characterInfo[build.character.character].element})"
