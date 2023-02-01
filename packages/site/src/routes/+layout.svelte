@@ -1,5 +1,7 @@
 <script>
 	import { base } from '$app/paths';
+	import { page } from '$app/stores';
+
 	import '../app.scss';
 	import Footer from '../components/Footer.svelte';
 </script>
@@ -16,7 +18,7 @@
 
 <div class="app w-screen h-screen overflow-scroll">
 	<slot />
-	<Footer />
+	<Footer path={$page.url.href} />
 </div>
 
 <style lang="scss">
