@@ -1,0 +1,84 @@
+@font-face {
+	font-family: 'icomoon';
+	src: url('/webfonts/stats.eot?dsl84y');
+	src: url('/webfonts/stats.eot?dsl84y#iefix') format('embedded-opentype'),
+		url('/webfonts/stats.ttf?dsl84y') format('truetype'),
+		url('/webfonts/stats.woff?dsl84y') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'icomoon' !important;
+	speak: never;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-anemo_dmg:before {
+	content: '\e900';
+}
+.icon-atk:before {
+	content: '\e901';
+}
+.icon-atk_:before {
+	content: '\e902';
+}
+.icon-critDMG_:before {
+	content: '\e903';
+}
+.icon-critRate_:before {
+	content: '\e905';
+}
+.icon-cryo_dmg_:before {
+	content: '\e906';
+}
+.icon-def:before {
+	content: '\e907';
+}
+.icon-def_:before {
+	content: '\e908';
+}
+.icon-dendro_dmg_:before {
+	content: '\e909';
+}
+.icon-electro_dmg_:before {
+	content: '\e90a';
+}
+.icon-eleMas:before {
+	content: '\e90b';
+}
+.icon-enerRech_:before {
+	content: '\e90c';
+}
+.icon-geo_dmg_:before {
+	content: '\e90e';
+}
+.icon-heal_:before {
+	content: '\e90f';
+}
+.icon-hp:before {
+	content: '\e910';
+}
+.icon-hp_:before {
+	content: '\e912';
+}
+.icon-hydro_dmg_:before {
+	content: '\e915';
+}
+.icon-physical_dmg_:before {
+	content: '\e916';
+}
+.icon-pyro_dmg_:before {
+	content: '\e917';
+}
