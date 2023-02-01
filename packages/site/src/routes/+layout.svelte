@@ -1,6 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import '../app.scss';
+	import Footer from '../components/Footer.svelte';
 </script>
 
 <svelte:head>
@@ -12,14 +13,19 @@
 		media="screen and (prefers-color-scheme: dark)"
 	/>
 </svelte:head>
-<slot />
+
+<div class="app w-screen h-screen overflow-scroll">
+	<slot />
+	<Footer />
+</div>
 
 <style lang="scss">
 	@use '../app.scss';
 	:global(body) {
 		margin: 0;
-		width: 100vw;
-		height: 100vh;
+	}
+
+	.app {
 		background-image: url(/bg.jpg);
 		background-size: cover;
 	}

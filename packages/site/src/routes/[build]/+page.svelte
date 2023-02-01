@@ -10,7 +10,7 @@
 
 <div
 	id="card-container"
-	class="grid grid-cols-1 2xl:grid-cols-2 justify-items-start md:justify-items-center gap-y-8 h-screen overflow-scroll py-4"
+	class="grid grid-cols-1 2xl:grid-cols-2 justify-items-start md:justify-items-center gap-y-8 py-4"
 >
 	{#each builds as build}
 		<Card {build} />
