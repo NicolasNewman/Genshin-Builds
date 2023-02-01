@@ -33,7 +33,9 @@
 				{#if stat[1] > 0}
 					{@const isPercent = stat[0].includes('_')}
 					<div class="stat">
-						<div class="stat-icon" style="mask-image: url({base}/icons/{stat[0]}.svg)" />
+						<i class="icon-{stat[0]}">
+							<span class="path1" /><span class="path2" />
+						</i>
 						{isPercent ? stat[1].toFixed(1) : stat[1].toLocaleString('en-us')}{isPercent ? '%' : ''}
 					</div>
 				{/if}

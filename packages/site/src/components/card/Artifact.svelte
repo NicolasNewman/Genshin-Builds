@@ -21,14 +21,11 @@
 					/>
 					<div class="h-full flex flex-col justify-around items-end">
 						{#if artifact.type === 'sands' || artifact.type === 'goblet' || artifact.type === 'circlet'}
-							<div
-								class="stat-icon lg"
-								style="mask-image: url({base}/icons/{artifact.mainstat}.svg)"
-							/>
+							<i class="icon-{artifact.mainstat} lg" />
 						{:else if artifact.type === 'flower'}
-							<div class="stat-icon lg" style="mask-image: url({base}/icons/hp.svg)" />
+							<i class="icon-hp lg" />
 						{:else}
-							<div class="stat-icon lg" style="mask-image: url({base}/icons/atk.svg)" />
+							<i class="icon-atk lg" />
 						{/if}
 
 						<div class="flex">
@@ -39,28 +36,20 @@
 				<div class="text-sm flex flex-col w-full">
 					{#if artifact.substatOne}
 						<div class="flex justify-between">
-							<div
-								class="stat-icon"
-								style="mask-image: url({base}/icons/{artifact.substatOne}.svg)"
-							/>
+							<i class="icon-{artifact.substatOne}" />
 							<span>{artifact.substatOneRoll}{artifact.substatOne?.includes('_') ? '%' : ''}</span>
 						</div>
 					{/if}
 					{#if artifact.substatTwo}
 						<div class="flex justify-between">
-							<div
-								class="stat-icon"
-								style="mask-image: url({base}/icons/{artifact.substatTwo}.svg)"
-							/>
+							<i class="icon-{artifact.substatTwo}" />
+
 							<span>{artifact.substatTwoRoll}{artifact.substatTwo?.includes('_') ? '%' : ''}</span>
 						</div>
 					{/if}
 					{#if artifact.substatThree}
 						<div class="flex justify-between">
-							<div
-								class="stat-icon"
-								style="mask-image: url({base}/icons/{artifact.substatThree}.svg)"
-							/>
+							<i class="icon-{artifact.substatThree}" />
 							<span
 								>{artifact.substatThreeRoll}{artifact.substatThree?.includes('_') ? '%' : ''}</span
 							>
@@ -68,10 +57,8 @@
 					{/if}
 					{#if artifact.substatFour}
 						<div class="flex justify-between">
-							<div
-								class="stat-icon"
-								style="mask-image: url({base}/icons/{artifact.substatFour}.svg)"
-							/>
+							<i class="icon-{artifact.substatFour}" />
+
 							<span>{artifact.substatFourRoll}{artifact.substatFour?.includes('_') ? '%' : ''}</span
 							>
 						</div>
@@ -86,18 +73,12 @@
 	.info {
 		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
 	}
-	.stat-icon {
-		width: 16px;
-		height: 16px;
-		background-color: white;
-		mask-size: contain;
-		mask-position: center;
-		mask-repeat: no-repeat;
+	[class^='icon-'] {
+		font-size: 16px;
 		display: inline-block;
 	}
 
-	.stat-icon.lg {
-		width: 24px;
-		height: 24px;
+	[class^='icon-'].lg {
+		font-size: 24px;
 	}
 </style>
