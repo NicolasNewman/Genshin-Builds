@@ -171,6 +171,21 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 			map.critDMG_ = 0;
 		}
 	}
+	if (character.character === 'Xingqiu') {
+		if (character.ascension >= 4) {
+			map.hydro_dmg_ += 20.0;
+		}
+	}
+	if (character.character === 'RaidenShogun') {
+		if (character.ascension >= 4) {
+			map.electro_dmg_ += (map.enerRech_ - 100) * 0.4;
+		}
+	}
+	if (character.character === 'Mona') {
+		if (character.ascension >= 4) {
+			map.hydro_dmg_ += map.enerRech_ * 0.2; // TODO verify correct
+		}
+	}
 	return map;
 };
 
