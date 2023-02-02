@@ -1,9 +1,9 @@
 // import type { IBuild } from "src/types/build";
 // import type { IGOOD, StatKey, SubstatKey } from "src/types/good";
-import { characterInfo, weaponInfo, type StatBuff } from 'shared';
+import { characterInfo, getEntries, weaponInfo, type ArtifactKey, type StatBuff } from 'shared';
 import type { IArtifact, IBuild } from '../types/build';
 import type { IGOOD, StatKey, SubstatKey } from '../types/good';
-import { mainStatValues } from '../types/stats';
+import { artifactSetBonus, mainStatValues } from '../types/stats';
 import { ascensionLevelRange } from './db';
 import { roundSubStat } from './helper';
 
@@ -96,8 +96,10 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 		}
 	}
 
+	const setCount: Partial<{ [key in ArtifactKey]: number }> = {};
 	const computeArtifactSubStats = (artifact: IArtifact<'flower' | 'circlet'> | undefined) => {
 		if (artifact) {
+			setCount[artifact.set] = (setCount[artifact.set] ?? 0) + 1;
 			if (artifact.substatOne) {
 				map[artifact.substatOne] += artifact.substatOneRoll;
 			}
@@ -117,6 +119,21 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 	computeArtifactSubStats(goblet);
 	computeArtifactSubStats(sands);
 	computeArtifactSubStats(circlet);
+
+	getEntries(setCount).forEach((bonus) => {
+		if (bonus) {
+			const [set, count] = bonus;
+			if ((count ?? 0) >= 2) {
+				const bonus = artifactSetBonus[set]?.[0];
+				console.log(bonus);
+				if (bonus) map[bonus[0]] += bonus[1];
+			}
+			if ((count ?? 0) >= 4) {
+				const bonus = artifactSetBonus[set]?.[1];
+				if (bonus) map[bonus[0]] += bonus[1];
+			}
+		}
+	});
 
 	const computeArtifactMainStats = (artifact: IArtifact<'circlet'> | undefined) => {
 		if (artifact?.set) {
