@@ -56,11 +56,11 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 		atk_: 0,
 		def: 0,
 		def_: 0,
-		critDMG_: 0,
-		critRate_: 0,
+		critDMG_: 50,
+		critRate_: 5,
 		eleMas: 0,
 		heal_: 0,
-		enerRech_: 0,
+		enerRech_: 100,
 		physical_dmg_: 0,
 		anemo_dmg_: 0,
 		cryo_dmg_: 0,
@@ -80,9 +80,10 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 	const characterBuffs = stats[character.ascension][character.level === range[1] ? 1 : 0];
 
 	map[characterAscensionStat] += characterBuffs.SP;
-	map['atk'] += characterBuffs.ATK;
-	map['def'] += characterBuffs.DEF;
-	map['hp'] += characterBuffs.HP;
+	const baseDEF = characterBuffs.DEF;
+	const baseHP = characterBuffs.HP;
+	let baseATK = characterBuffs.ATK;
+
 	if (weapon?.weapon) {
 		const { statBuff, stats } = weaponInfo[weapon.weapon];
 		if (statBuff !== null && stats !== null) {
@@ -91,7 +92,7 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 			const weaponBuffs = stats[weapon.ascension][weapon.level === range[1] ? 1 : 0];
 
 			map[weaponAscensionStat] += weaponBuffs.SP;
-			map['atk'] += weaponBuffs.ATK;
+			baseATK += weaponBuffs.ATK;
 		}
 	}
 
@@ -120,14 +121,31 @@ export const computeBuildStats = (build: IBuild): StatMap => {
 	const computeArtifactMainStats = (artifact: IArtifact<'circlet'> | undefined) => {
 		if (artifact?.set) {
 			const { mainstat, level, rarity } = artifact;
-			console.log(rarity);
-			console.log(level);
 			map[mainstat] += mainStatValues[rarity - 1][mainstat][level];
 		}
 	};
 	computeArtifactMainStats(goblet);
 	computeArtifactMainStats(sands);
 	computeArtifactMainStats(circlet);
+
+	const flatHP = map['hp'];
+	map['hp'] = baseHP * (1 + map['hp_'] / 100) + flatHP;
+	if (flower) {
+		map['hp'] += mainStatValues[flower.rarity - 1]['hp'][flower.level];
+		map['hp'] = Math.ceil(map['hp']);
+		map['hp_'] = 0;
+	}
+	const flatATK = map['atk'];
+	map['atk'] = baseATK * (1 + map['atk_'] / 100) + flatATK;
+	if (plume) {
+		map['atk'] += mainStatValues[plume.rarity - 1]['atk'][plume.level];
+		map['atk'] = Math.ceil(map['atk']);
+		map['atk_'] = 0;
+	}
+	const flatDEF = map['def'];
+	map['def'] = baseDEF * (1 + map['def_'] / 100) + flatDEF;
+	map['def'] = Math.ceil(map['def']);
+	map['def_'] = 0;
 
 	// character edge cases
 	if (character.character === 'SangonomiyaKokomi') {
