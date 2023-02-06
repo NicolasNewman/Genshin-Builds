@@ -40,5 +40,11 @@
 		--Pyro: linear-gradient(180deg, #{app.$pyro-dark} 50%, #{app.$pyro} 100%);
 		--Hydro: linear-gradient(180deg, #{app.$hydro-dark} 50%, #{app.$hydro} 100%);
 		--Anemo: linear-gradient(180deg, #{app.$anemo-dark} 50%, #{app.$anemo} 100%);
+
+		--common: #{app.$common};
+		--uncommon: #{app.$uncommon};
+		--rare: #{app.$rare};
+		--epic: #{app.$epic};
+		--legendary: #{app.$legendary};
 	}
 </style>
