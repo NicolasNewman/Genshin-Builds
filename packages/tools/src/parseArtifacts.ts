@@ -100,8 +100,8 @@ const parseArtifacts = async (threads: number) => {
                     iconURLs.flower = getSrc(icons.item(0)) || "";
                     iconURLs.plume = getSrc(icons.item(1)) || "";
                     iconURLs.sands = getSrc(icons.item(2)) || "";
-                    iconURLs.circlet = getSrc(icons.item(3)) || "";
-                    iconURLs.goblet = getSrc(icons.item(4)) || "";
+                    iconURLs.goblet = getSrc(icons.item(3)) || "";
+                    iconURLs.circlet = getSrc(icons.item(4)) || "";
                   }
                   const setName = set.textContent.replace(/\n/g, "");
                   const obj = {
