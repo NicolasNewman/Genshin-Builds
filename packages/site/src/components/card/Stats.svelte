@@ -12,22 +12,22 @@
 
 <div class="relative h-full z-10 ml-4">
 	<div class="info flex flex-col h-full text-lg">
-		<div class="flex items-center mt-3">
-			<img class="w-16 h-16" src="{base}/weapons/{weapon?.weapon}.png" alt="Weapon Icon" />
-			<div class="flex flex-col items-center">
-				<div class="text-center stat">
-					{seperateCamelCase(truncateWeapon(weapon?.weapon ?? ''))}
-				</div>
-				<div class="flex">
-					<div class="text-sm p-1 m-1 rounded bg-white/[.2]">
-						Lvl. {weapon?.level}/<span class="text-xs"
-							>{getAcensionLevel(weapon?.ascension ?? 0)}</span
-						>
+		{#if weapon}
+			<div class="flex items-center mt-3">
+				<img class="w-16 h-16" src="{base}/weapons/{weapon.weapon}.png" alt="Weapon Icon" />
+				<div class="flex flex-col items-center">
+					<div class="text-center stat">
+						{seperateCamelCase(truncateWeapon(weapon.weapon))}
 					</div>
-					<div class="text-sm p-1 m-1 rounded bg-white/[.2]">R{weapon?.refinement}</div>
+					<div class="flex">
+						<div class="text-sm p-1 m-1 rounded bg-white/[.2]">
+							Lvl. {weapon.level}/<span class="text-xs">{getAcensionLevel(weapon.ascension)}</span>
+						</div>
+						<div class="text-sm p-1 m-1 rounded bg-white/[.2]">R{weapon.refinement}</div>
+					</div>
 				</div>
 			</div>
-		</div>
+		{/if}
 		<div class="grid grid-cols-2 gap-x-3 mt-1">
 			{#each getEntries(stats) as stat}
 				{#if stat[1] > 0}
