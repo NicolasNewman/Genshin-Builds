@@ -4,8 +4,9 @@
  * Contains mappings of substat value combinations, organized by rarity
  */
 
+import type { JoinedStat } from '$lib/build';
 import { ssCombRep } from '$lib/helper';
-import { toIdedObj, toStringArray } from 'shared';
+import { toIdedObj, toStringArray, type ArtifactKey } from 'shared';
 import type { StatKey, SubstatKey } from './good';
 
 export const mainStatValues: { [key in StatKey]: number[] }[] = [
@@ -399,4 +400,106 @@ export const subStatValueIDs: { [key in SubstatKey | '_']: { [key: string]: numb
 		_: { _: 0, 0: 0 }
 	}
 ];
-// console.log(subStatValueIDs);
+
+export const subStatMaxRoll: { [key in SubstatKey]: number }[] = [
+	{
+		hp: 0, //HP
+		atk: 0, //ATK
+		def: 0, //DEF
+		hp_: 0, //HP%
+		atk_: 0, //ATK%
+		def_: 0, //DEF%
+		eleMas: 0, //Elemental Mastery
+		enerRech_: 0, //Energy Recharge
+		critRate_: 0, //Crit Rate
+		critDMG_: 0 //Crit DMG
+	},
+	{
+		hp: 0, //HP
+		atk: 0, //ATK
+		def: 0, //DEF
+		hp_: 0, //HP%
+		atk_: 0, //ATK%
+		def_: 0, //DEF%
+		eleMas: 0, //Elemental Mastery
+		enerRech_: 0, //Energy Recharge
+		critRate_: 0, //Crit Rate
+		critDMG_: 0 //Crit DMG
+	},
+	{
+		hp: 0, //HP
+		atk: 0, //ATK
+		def: 0, //DEF
+		hp_: 0, //HP%
+		atk_: 0, //ATK%
+		def_: 0, //DEF%
+		eleMas: 0, //Elemental Mastery
+		enerRech_: 0, //Energy Recharge
+		critRate_: 0, //Crit Rate
+		critDMG_: 0 //Crit DMG
+	},
+	{
+		hp: 239 * 4, //HP
+		atk: 15.56 * 4, //ATK
+		def: 18.52 * 4, //DEF
+		hp_: 4.66 * 4, //HP%
+		atk_: 4.66 * 4, //ATK%
+		def_: 5.83 * 4, //DEF%
+		eleMas: 18.56 * 4, //Elemental Mastery
+		enerRech_: 5.18 * 4, //Energy Recharge
+		critRate_: 3.11 * 4, //Crit Rate
+		critDMG_: 6.22 * 4 //Crit DMG
+	},
+	{
+		hp: 298.75 * 6, //HP
+		atk: 19.45 * 6, //ATK
+		def: 23.15 * 6, //DEF
+		hp_: 5.83 * 6, //HP%
+		atk_: 5.83 * 6, //ATK%
+		def_: 7.29 * 6, //DEF%
+		eleMas: 23.31 * 6, //Elemental Mastery
+		enerRech_: 6.48 * 6, //Energy Recharge
+		critRate_: 3.89 * 6, //Crit Rate
+		critDMG_: 7.77 * 6 //Crit DMG
+	}
+];
+
+export const artifactSetBonus: Partial<{ [key in ArtifactKey]: [JoinedStat, number][] }> = {
+	Adventurer: [['hp', 1000]],
+	LuckyDog: [['def', 100]],
+	ResolutionOfSojourner: [['atk_', 18.0]],
+	Berserker: [['critRate_', 12.0]],
+	Instructor: [['eleMas', 80]],
+	TheExile: [['enerRech_', 20.0]],
+	DefendersWill: [['def_', 30.0]],
+	BraveHeart: [['atk_', 18.0]],
+	Scholar: [['enerRech_', 20.0]],
+	GladiatorsFinale: [['atk_', 18]],
+	WanderersTroupe: [['eleMas', 80]],
+	BloodstainedChivalry: [['physical_dmg_', 25.0]],
+	MaidenBeloved: [['heal_', 15.0]],
+	ViridescentVenerer: [['anemo_dmg_', 15.0]],
+	ArchaicPetra: [['geo_dmg_', 15.0]],
+	ThunderingFury: [['electro_dmg_', 15.0]],
+	CrimsonWitchOfFlames: [['pyro_dmg_', 15.0]],
+	BlizzardStrayer: [['cryo_dmg_', 15.0]],
+	HeartOfDepth: [['hydro_dmg_', 15.0]],
+	TenacityOfTheMillelith: [['hp_', 20.0]],
+	PaleFlame: [['physical_dmg_', 25.0]],
+	ShimenawasReminiscence: [['atk_', 18.0]],
+	EmblemOfSeveredFate: [['enerRech_', 20.0]],
+	HuskOfOpulentDreams: [['def_', 30.0]],
+	OceanHuedClam: [['heal_', 15.0]],
+	VermillionHereafter: [['atk_', 18.0]],
+	EchoesOfAnOffering: [['dendro_dmg_', 15.0]],
+	GildedDreams: [['eleMas', 80.0]],
+	DesertPavilionChronicle: [['anemo_dmg_', 15.0]],
+	FlowerOfParadiseLost: [['eleMas', 80.0]]
+};
+
+export const getSubstatTier = (stat: SubstatKey, tier: number, roll: number) => {
+	const percent = roll / subStatMaxRoll[tier - 1][stat];
+	const rarities = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
+	const i = Math.ceil(percent * rarities.length) - 1;
+	return rarities[i];
+};

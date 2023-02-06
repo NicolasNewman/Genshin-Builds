@@ -1,12 +1,10 @@
 <script lang="ts">
 	import type { SlotKey } from '../../types/good';
 	import type { IArtifact, IBuild } from '../../types/build';
-	import { StatToName } from '$lib/build';
 	import { base } from '$app/paths';
+	import { getSubstatTier } from '../../types/stats';
 	export let slot: SlotKey;
 	export let artifact: IArtifact<typeof slot>;
-	console.log(artifact);
-	console.log(slot);
 </script>
 
 {#if artifact.set !== undefined}
@@ -36,20 +34,41 @@
 				<div class="text-sm flex flex-col w-full">
 					{#if artifact.substatOne}
 						<div class="flex justify-between">
-							<i class="icon-{artifact.substatOne}" />
+							<i
+								class="icon-{artifact.substatOne}"
+								style="color: var(--{getSubstatTier(
+									artifact.substatOne,
+									artifact.rarity,
+									artifact.substatOneRoll
+								)});"
+							/>
 							<span>{artifact.substatOneRoll}{artifact.substatOne?.includes('_') ? '%' : ''}</span>
 						</div>
 					{/if}
 					{#if artifact.substatTwo}
 						<div class="flex justify-between">
-							<i class="icon-{artifact.substatTwo}" />
+							<i
+								class="icon-{artifact.substatTwo}"
+								style="color: var(--{getSubstatTier(
+									artifact.substatTwo,
+									artifact.rarity,
+									artifact.substatTwoRoll
+								)});"
+							/>
 
 							<span>{artifact.substatTwoRoll}{artifact.substatTwo?.includes('_') ? '%' : ''}</span>
 						</div>
 					{/if}
 					{#if artifact.substatThree}
 						<div class="flex justify-between">
-							<i class="icon-{artifact.substatThree}" />
+							<i
+								class="icon-{artifact.substatThree}"
+								style="color: var(--{getSubstatTier(
+									artifact.substatThree,
+									artifact.rarity,
+									artifact.substatThreeRoll
+								)});"
+							/>
 							<span
 								>{artifact.substatThreeRoll}{artifact.substatThree?.includes('_') ? '%' : ''}</span
 							>
@@ -57,7 +76,14 @@
 					{/if}
 					{#if artifact.substatFour}
 						<div class="flex justify-between">
-							<i class="icon-{artifact.substatFour}" />
+							<i
+								class="icon-{artifact.substatFour}"
+								style="color: var(--{getSubstatTier(
+									artifact.substatFour,
+									artifact.rarity,
+									artifact.substatFourRoll
+								)});"
+							/>
 
 							<span>{artifact.substatFourRoll}{artifact.substatFour?.includes('_') ? '%' : ''}</span
 							>
