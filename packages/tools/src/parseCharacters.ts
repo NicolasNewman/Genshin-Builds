@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import { Actor } from "apify";
 import { PuppeteerCrawler } from "crawlee";
-import { toString } from "./lib";
+import { autoScroll, download, toString } from "./lib";
 
 const getUrl = (character: string) => {
   return `https://genshin-impact.fandom.com/wiki/${character
@@ -72,22 +72,32 @@ export const characterInfo: {
 const parseCharacters = async (threads: number = 6) => {
   const crawler = new PuppeteerCrawler({
     async requestHandler({ request, page, enqueueLinks }) {
-      const dlog = (msg: any) => console.log(msg);
+      const dlog = (msg: any) => console.log(msg.toString());
       await page.exposeFunction("dlog", dlog);
       console.log("Processing: " + request.url);
       if (request.url.includes("Character")) {
         const selector = "tbody > tr";
         await page.waitForSelector(selector);
+        await autoScroll(page);
+        new Promise((r) => setTimeout(r, 60000));
         const characterData = (
           await page.$$eval(selector, ($$tr) => {
+            const getSrc = (element: Element) =>
+              element.getAttribute("src")?.replace(/\/scale-to-width.*/g, "");
+
             return $$tr.map(($tr) => {
               if ($tr.children.length === 7) {
-                const icon = $tr.children.item(0);
+                const icon = $tr.children.item(0)?.querySelector("img");
                 const name = $tr.children.item(1);
                 const element = $tr.children.item(3);
                 const weapon = $tr.children.item(4);
+
+                let url = null;
+                if (icon) {
+                  url = getSrc(icon);
+                }
                 if (
-                  icon &&
+                  url &&
                   name?.textContent &&
                   element?.textContent &&
                   weapon?.textContent
@@ -100,7 +110,7 @@ const parseCharacters = async (threads: number = 6) => {
                   if (obj.element === "" || obj.weapon === "") {
                     return null;
                   } else {
-                    return obj;
+                    return { url, data: obj };
                   }
                 } else {
                   return `Failed for: ${name?.innerHTML ?? "undefined"}`;
@@ -108,28 +118,43 @@ const parseCharacters = async (threads: number = 6) => {
               }
             });
           })
-        )
-          .filter(
-            (obj): obj is { name: string; element: string; weapon: string } =>
-              obj != null && // check null & undefined
-              typeof obj === "object" &&
-              obj.name != null &&
-              obj.element != null &&
-              obj.weapon != null
+        ).filter(
+          (
+            obj
+          ): obj is {
+            url: string;
+            data: { name: string; element: string; weapon: string };
+          } =>
+            obj != null && // check null & undefined
+            typeof obj === "object" &&
+            obj.url != null &&
+            obj.data.name != null &&
+            obj.data.element != null &&
+            obj.data.weapon != null
+        );
+        const iconUrls = characterData.map((obj) => ({
+          url: obj.url,
+          name: obj.data.name,
+        }));
+        await Promise.all(
+          iconUrls.map((obj) =>
+            download(obj.url, `../site/static/profile/${obj.name}.png`)
           )
-          .reduce<{ [key: string]: { element: string; weapon: string } }>(
-            (prev, curr) => {
-              return {
-                ...prev,
-                [curr.name]: { element: curr.element, weapon: curr.weapon },
-              };
+        );
+        const characterInfo = characterData.reduce<{
+          [key: string]: { element: string; weapon: string };
+        }>((prev, curr) => {
+          return {
+            ...prev,
+            [curr.data.name]: {
+              element: curr.data.element,
+              weapon: curr.data.weapon,
             },
-            {}
-          );
-        const urls = Object.keys(characterData).map((key) => getUrl(key));
-        console.log(urls);
+          };
+        }, {});
+        const urls = Object.keys(characterInfo).map((key) => getUrl(key));
         await enqueueLinks({ urls });
-        await Actor.setValue("characters", characterData);
+        await Actor.setValue("characters", characterInfo);
       } else {
         const selector = "table.ascension-stats > tbody";
         await page.waitForSelector(selector);
@@ -223,6 +248,8 @@ const parseCharacters = async (threads: number = 6) => {
       }
     },
     maxConcurrency: threads,
+    requestHandlerTimeoutSecs: 600,
+    navigationTimeoutSecs: 600,
   });
   await crawler.run(["https://genshin-impact.fandom.com/wiki/Character"]);
   const characters: { [key: string]: any } | null = await Actor.getValue(
