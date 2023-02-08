@@ -3,6 +3,7 @@
  *
  * Contains encoding/decoding and base 2<->64 conversion functions
  */
+import { b2to64, b64to2 } from '$lib/encode/scheme';
 import {
 	artifactIDs,
 	artifacts,
@@ -13,38 +14,11 @@ import {
 	characterWeapons,
 	type AscensionKey
 } from 'shared';
-import type { IBuild } from '../types/build';
-import type { IGOOD } from '../types/good';
-import { subStatValueIDs, subStatValues } from '../types/stats';
-import { convertGOODtoBuild } from './build';
-import { artifactMS, artifactMSIDs, artifactSS, artifactSSIDs } from './db';
-
-// charset for base64 encoding (modified to be URL safe)
-const to = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._'.split('');
-const from: { [key: string]: number } = {};
-// fill "from" mapping object
-to.forEach((char, i) => (from[char] = i));
-
-/**
- *
- * @param b2 base 2 string
- * @returns base 64 encoded string
- */
-export function b2to64(b2: string) {
-	return (b2.match(/.{1,6}/g) || []).map((n) => to[parseInt(n, 2)]).join('');
-}
-
-/**
- *
- * @param b64 base 64 string
- * @returns base 2 encoded string
- */
-export function b64to2(b64: string) {
-	return b64
-		.split('')
-		.map((n) => ('00000' + from[n].toString(2)).slice(-6))
-		.join('');
-}
+import type { IBuild } from '../../types/build';
+import type { IGOOD } from '../../types/good';
+import { subStatValueIDs, subStatValues } from '../../types/stats';
+import { convertGOODtoBuild } from '../build';
+import { artifactMS, artifactMSIDs, artifactSS, artifactSSIDs } from '../db';
 
 /**
  *
@@ -460,7 +434,7 @@ function localDecode(str: string): IBuild {
  * @returns decoded character builds
  */
 export function decode(str: string) {
-	const characters = str.match(/.{1,56}/g) || [];
-	const decodedCharacters = characters.map((character) => localDecode(b64to2(character)));
+	const builds = str.match(/.{1,56}/g) || [];
+	const decodedCharacters = builds.map((character) => localDecode(b64to2(character)));
 	return decodedCharacters;
 }
