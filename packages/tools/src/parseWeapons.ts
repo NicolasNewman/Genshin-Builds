@@ -50,6 +50,8 @@ export const ${weaponType.toLocaleLowerCase()}IDs = toIdedObj(${weaponType.toLoc
     )
     .join("\n")}
 export type WeaponKey = ${toString(weapons).join(" | ")};
+export const weapons: WeaponKey[] = [${toString(weapons).toString()}];
+export const weaponIDs = toIdedObj(weapons);
 export const weaponInfo: {
   [key in WeaponKey]: {
     name: string,
