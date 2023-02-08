@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { decode } from '$lib/encode';
+	import { decode } from '$lib/encode/';
 	import Card from '../../components/card/Card.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
