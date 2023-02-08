@@ -5,12 +5,13 @@
 	import CharacterSelect from '../components/modal/CharacterSelect.svelte';
 	import BuildLink from '../components/modal/BuildLink.svelte';
 	import type { CharacterSelectFieldData } from '../types/ui';
-	import { encode } from '$lib/encode';
+	import { encode, type EncodedBuild } from '$lib/encode/';
+	import type { CharacterSelectEvent } from '../types/events';
 
 	let characterSelectOpen = false;
 	let buildLinkOpen = false;
 	let good: IGOOD | undefined = undefined;
-	let build: string = '';
+	let build: EncodedBuild = '';
 	let files: FileList;
 	let characters: CharacterSelectFieldData[] = [];
 
@@ -19,6 +20,7 @@
 		const json = JSON.parse(this.result?.toString() || '{}');
 		if (isIGOOD(json)) {
 			good = json;
+			good.characters = good.characters?.filter((character) => !character.key.includes('Traveler'));
 			characters =
 				json.characters?.map((character) => ({ key: character.key, checked: false })).sort() ?? [];
 			if (characters.length > 0) {
@@ -32,12 +34,19 @@
 		reader.readAsText(files[0]);
 	}
 
-	function onModalConfirm(event: CustomEvent<CharacterSelectFieldData[]>) {
+	function onBuildEvent(event: CustomEvent<CharacterSelectEvent['build']>) {
 		if (good) {
 			const selectedCharacters: { [key: string]: number } = {};
 			event.detail.forEach((character) => (selectedCharacters[character.key] = 1));
 			good.characters = good?.characters?.filter((character) => selectedCharacters[character.key]);
-			build = encode(good);
+			build = encode(good, 'build');
+			buildLinkOpen = true;
+		}
+	}
+
+	function onInvEvent(event: CustomEvent<CharacterSelectEvent['inv']>) {
+		if (good) {
+			build = encode(good, 'inv');
 			buildLinkOpen = true;
 		}
 	}
@@ -61,5 +70,10 @@
 		</Paper>
 	</div>
 </div>
-<CharacterSelect open={characterSelectOpen} {characters} on:modalConfirm={onModalConfirm} />
+<CharacterSelect
+	open={characterSelectOpen}
+	{characters}
+	on:build={onBuildEvent}
+	on:inv={onInvEvent}
+/>
 <BuildLink open={buildLinkOpen} {build} />
