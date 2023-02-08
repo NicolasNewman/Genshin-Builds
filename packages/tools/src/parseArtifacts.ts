@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import { Actor } from "apify";
 import { PuppeteerCrawler } from "crawlee";
-import { download, toString } from "./lib";
+import { autoScroll, download, toString } from "./lib";
 import { Page } from "puppeteer";
 
 const exportData = (data: ArtifactParseData) => {
@@ -22,25 +22,6 @@ type ArtifactIcons = {
   circlet: string;
   goblet: string;
 };
-
-async function autoScroll(page: Page) {
-  await page.evaluate(async () => {
-    await new Promise((resolve) => {
-      var totalHeight = 0;
-      var distance = 30;
-      var timer = setInterval(() => {
-        var scrollHeight = document.body.scrollHeight;
-        window.scrollBy(0, distance);
-        totalHeight += distance;
-
-        if (totalHeight >= scrollHeight - window.innerHeight) {
-          clearInterval(timer);
-          resolve("");
-        }
-      }, 100);
-    });
-  });
-}
 
 type ArtifactParseData = {
   [key: string]: {

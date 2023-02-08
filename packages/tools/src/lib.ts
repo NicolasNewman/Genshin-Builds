@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as https from "https";
+import { Page } from "puppeteer";
 
 export const toString = (arr: string[]) => arr.map((str) => `'${str}'`);
 export const download = (url: string, dest: string) => {
@@ -25,3 +26,26 @@ export const download = (url: string, dest: string) => {
       });
   });
 };
+
+export const path = (path: string) => path.split("/").pop();
+
+export async function autoScroll(page: Page, delay = 100, distance = 30) {
+  await page.evaluate(
+    async (delay, distance) => {
+      await new Promise((resolve) => {
+        var totalHeight = 0;
+        var timer = setInterval(() => {
+          var scrollHeight = document.body.scrollHeight;
+          window.scrollBy(0, distance);
+          totalHeight += distance;
+          if (totalHeight >= scrollHeight - window.innerHeight) {
+            clearInterval(timer);
+            resolve("");
+          }
+        }, delay);
+      });
+    },
+    delay,
+    distance
+  );
+}
